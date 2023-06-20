@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--=============== REMIXICONS ===============-->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <title>Tools - NMS project</title>
+  <style>
+    .option-fields {
+      display: none;
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'nmsapp/css/input.css' %}" />
+</head>
+
+<body>
+  <nav class="nav">
+    <ul class="nav__list">
+      <a href="home" class="nav__link">
+        <i class="ri-dashboard-3-line"></i>
+        <span class="nav__name">Tools</span>
+      </a>
+
+      <a href="page1" class="nav__link">
+        <i class="ri-account-box-line"></i>
+        <span class="nav__name">Backup Config</span>
+      </a>
+
+      <a href="input" class="nav__link active-link">
+        <i class="ri-chat-upload-line"></i>
+        <span class="nav__name">Input Scheduler</span>
+      </a>
+    </ul>
+
+    <!-- Shapes -->
+    <div class="nav__circle-1"></div>
+    <div class="nav__circle-2"></div>
+
+    <div class="nav__square-1"></div>
+    <div class="nav__square-2"></div>
+  </nav>
+
+  <section class="container">
+    <header>Tools</header>
+    <form action="input" method="POST" name="harsh">
+      {% csrf_token %}
+      <div>
+        <label for="name">Name<span style="color:red">*</span>: </label>
+        <input type="text" id="name" name="name">
+      </div>
+
+      <label for="option">Choose an option:</label>
+      <select name="devicevendor" id="devicevendor" onchange="showFields()">
+        <option value="none">None</option>
+        <option value="cisco" >CISCO</option>
+        <option value="jumpi">Jumpi</option>
+        <option value="dell">Dell</option>
+      </select>
+
+      <div>
+        <label for="includehost">Include Host<span style="color:red">*</span>: </label>
+        <input type="text" id="includehost" name="includehost">
+      </div>
+
+      <div>
+        <label for="emailsub">Email Subject<span style="color:red">*</span>: </label>
+        <input type="text" id="emailsub" name="emailsub">
+      </div>
+
+      <div>
+        <label for="emailid">Email ID<span style="color:red">*</span>: </label>
+        <input type="text" id="emailid" name="emailid">
+      </div>
+
+      <div>
+        <label for="notigrp">Notification Group<span style="color:red">*</span>: </label>
+        <input type="text" id="notigrp" name="notigrp">
+      </div>
+
+      <div>
+        <label for="minutes">Minute(s)<span style="color:red">*</span>: </label>
+        <input type="text" id="minutes" name="minutes">
+      </div>
+
+      <div>
+        <label for="hours">Hour(s)<span style="color:red">*</span>: </label>
+        <input type="text" id="hours" name="hours">
+      </div>
+
+      <div>
+        <label for="daysweek">Day(s) of week<span style="color:red">*</span>: </label>
+        <input type="text" id="daysweek" name="daysweek">
+      </div>
+
+      <div>
+        <label for="daysmonth">Day(s) of month<span style="color:red">*</span>: </label>
+        <input type="text" id="daysmonth" name="daysmonth">
+      </div>
+
+      <div>
+        <label for="monthyear">Month(s) of year<span style="color:red">*</span>: </label>
+        <input type="text" id="monthyear" name="monthyear">
+      </div>
+
+      <div>
+        <label for="scheduler_type">Scheduler Typer<span style="color:red">*</span>: </label>
+        <input type="text" id="scheduler_type" name="scheduler_type">
+      </div>
+
+      <div class="button-container">
+        <button id="submitButton" type="submit" value="Submit">Submit</button>
+        <button id="resetButton" type="reset" value = "reset" onclick="resetValues()">Reset</button>
+        <button id="stopButton" onclick="stopFunction()">Stop</button>
+      </div>
+      
+      <div class="output" id="inputText">
+
+        <body>
+          <label for="subject"><br>Output:</label>
+          <p>{{ result|linebreaksbr }}</p>
+        </body>
+      </div>
+    </form>
+    
+
+
+  </section>
+  <script>
+
+    function resetValues(){
+      document.getElementById('inputText').innerHTML='';
+      document.forms.harsh.reset();
+    }
+    const navLink = document.querySelectorAll('.nav__link');
+
+    function linkColor() {
+      navLink.forEach(link => link.classList.remove('active-link'));
+      this.classList.add('active-link');
+    }
+
+    navLink.forEach(link => link.addEventListener('click', linkColor));
+  </script>
+</body>
+
+</html>

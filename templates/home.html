@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--=============== REMIXICONS ===============-->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <title>Tools - NMS project</title>
+  <style>
+    .option-fields {
+      display: none;
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'nmsapp/css/home.css' %}" />
+</head>
+
+<body>
+  <nav class="nav">
+    <ul class="nav__list">
+      <a href="home" class="nav__link active-link">
+        <i class="ri-dashboard-3-line"></i>
+        <span class="nav__name">Tools</span>
+      </a>
+
+      <a href="page1" class="nav__link">
+        <i class="ri-account-box-line"></i>
+        <span class="nav__name">Backup Config</span>
+      </a>
+
+      <a href="input" class="nav__link">
+        <i class="ri-chat-upload-line"></i>
+        <span class="nav__name">Input Scheduler</span>
+      </a>
+
+    </ul>
+
+    <!-- Shapes -->
+    <div class="nav__circle-1"></div>
+    <div class="nav__circle-2"></div>
+
+    <div class="nav__square-1"></div>
+    <div class="nav__square-2"></div>
+  </nav>
+
+  <section class="container">
+    <header>Tools</header>
+    <form action="home" method="POST" name="harsh">
+      {% csrf_token %}
+      <label for="option">Choose an option:</label>
+      <select name="option" id="option" onchange="showFields()">
+        <option value="none">None</option>
+        <option value="ping" >PING</option>
+        <option value="traceroute">Traceroute</option>
+        <option value="snmpwalk">SNMPWALK</option>
+      </select>
+
+      <div>
+        <label for="IPAddress">IP Address<span style="color:red">*</span>: </label>
+        <input type="text" id="IPAddress" name="IPAddress">
+      </div>
+
+      <div class="option-fields" id="option1Fields">
+        <label for="CountRange">Count Range: </label>
+        <input type="text" id="CountRange" name="CountRange">
+      </div>
+
+      <div class="option-fields" id="option3Fields">
+        <label for="optionSNMP">SNMP<span style="color:red">*</span>:</label>
+        <select name="option_SNMP" id="option_SNMP" onchange="showFields()">
+          <option value="None">Select SNMP</option>
+          <option value="v1">SNMP V1</option>
+          <option value="v2c">SNMP V2</option>
+          <option value="v3">SNMP V3</option>
+        </select>
+
+        <div class="version" id="version12c">
+          <label for="CommStr">Community String<span style="color:red">*</span>: </label>
+          <input type="text" id="CommStr" name="CommStr">
+        </div>
+
+        <div class="version" id="version3">
+          <label for="SNMPCred">SNMP Credentials<span style="color:red">*</span>: </label>
+          <select name="SNMP_Cred" id="SNMP_Cred" onchange="showFields()">
+            <option value="None">Select SNMP</option>
+            <option value="woAP">without Authentication & Privacy</option>
+            <option value="wAwoP">with Authentication & without Privacy</option>
+            <option value="wAP">with Authentication & Privacy</option>
+          </select>
+
+          <div class="AuPr" id="withoutAP">
+            <label for="SecName">Security Name<span style="color:red">*</span>: </label>
+            <input type="text" id="SecName" name="SecName">
+          </div>
+
+          <div class="AuPr" id="withAwithoutP">
+            <label for="Apassword">Authentication Password<span style="color:red">*</span>: </label>
+            <input type="text" id="Apassword" name="Apassword">
+            <label for="Aprotocol">Authentication Protocol<span style="color:red">*</span>: </label>
+            <select name="Aprotocol" id="Aprotocol" onchange="showFields()">
+              <option value="None">None</option>
+              <option value="MD596">MD5-96</option>
+              <option value="SHA196">SHA-1-96</option>
+              <option value="SHA2224">SHA-2-224</option>
+              <option value="SHA2256">SHA-2-256</option>
+              <option value="SHA2384">SHA-2-384</option>
+              <option value="SHA2512">SHA-2-512</option>
+            </select>
+          </div>
+
+          <div class="AuPr" id="withAP">
+            <label for="Pprotocol">Privacy Protocol<span style="color:red">*</span>: </label>
+            <select name="Pprotocol" id="Pprotocol" onchange="showFields()">
+              <option value="None">None</option>
+              <option value="AES128">AES-128</option>
+              <option value="CBCDES">CBC-DES</option>
+            </select>
+            <label for="Ppassphrase">Privacy Passphrase<span style="color:red">*</span>: </label>
+            <input type="text" id="Ppassphrase" name="Ppassphrase">
+          </div>
+
+        </div>
+
+        <label for="OID">OID<span style="color:red">*</span>: </label>
+        <input type="text" id="OID" name="OID">
+        <label for="SNMPPORT">SNMP Port: </label>
+        <input type="text" id="SNMPPORT" name="SNMPPORT">
+      </div>
+
+      <div class="button-container">
+        <button id="submitButton" type="submit" value="Submit">Submit</button>
+        <button id="resetButton" type="reset" value = "reset" onclick="resetValues()">Reset</button>
+        <button id="stopButton" onclick="stopFunction()">Stop</button>
+      </div>
+      <label for="subject"><br>Output:</label>
+      <div class="output" id="inputText">
+
+        <body>
+          <p>{{ result|linebreaksbr }}</p>
+        </body>
+      </div>
+    </form>
+    
+
+
+  </section>
+  <script>
+
+    function resetValues(){
+      document.getElementById('inputText').innerHTML='';
+      document.forms.harsh.reset();
+    }
+    const navLink = document.querySelectorAll('.nav__link');
+
+    function linkColor() {
+      navLink.forEach(link => link.classList.remove('active-link'));
+      this.classList.add('active-link');
+    }
+
+    navLink.forEach(link => link.addEventListener('click', linkColor));
+
+    function showFields() {
+      var option = document.getElementById("option").value;
+      var optionFields = document.getElementsByClassName("option-fields");
+      for (var i = 0; i < optionFields.length; i++) {
+        optionFields[i].style.display = "none";
+      }
+      if (option === "ping") {
+        document.getElementById("option1Fields").style.display = "block";
+      } else if (option === "traceroute") {
+        document.getElementById("option2Fields").style.display = "block";
+      } else if (option === "snmpwalk") {
+        document.getElementById("option3Fields").style.display = "block";
+        var optionSNMP = document.getElementById("option_SNMP").value;
+        var version12c = document.getElementById("version12c");
+        var version3 = document.getElementById("version3");
+        var withoutAP = document.getElementById("withoutAP");
+        var withAwithoutP = document.getElementById("withAwithoutP");
+        var withAP = document.getElementById("withAP");
+
+        version12c.style.display = "none";
+        version3.style.display = "none";
+        withoutAP.style.display = "none";
+        withAwithoutP.style.display = "none";
+        withAP.style.display = "none";
+
+        if (optionSNMP === "v1" || optionSNMP === "v2c") {
+          version12c.style.display = "block";
+        } else if (optionSNMP === "v3") {
+          version3.style.display = "block";
+          var optionSNMPCred = document.getElementById("SNMP_Cred").value;
+
+          if (optionSNMPCred === "woAP") {
+            withoutAP.style.display = "block";
+          } else if (optionSNMPCred === "wAwoP") {
+            withAwithoutP.style.display = "block";
+            withoutAP.style.display = "block";
+          } else if (optionSNMPCred === "wAP") {
+            withAP.style.display = "block";
+            withAwithoutP.style.display = "block";
+            withoutAP.style.display = "block";
+          }
+        }
+      }
+      
+    }
+  </script>
+</body>
+
+</html>

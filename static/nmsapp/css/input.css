@@ -1,0 +1,257 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  --first-color: hsl(248, 74%, 58%);
+  --black-color: hsl(248, 24%, 10%);
+  --white-color: #fff;
+  --body-color: hsl(248, 100%, 99%);
+  /*========== Font and typography ==========*/
+  --body-font: "Poppins", sans-serif;
+  --small-font-size: .8rem;
+}
+
+@media screen and (min-width: 1024px) {
+  :root {
+    --small-font-size: .8rem;
+  }
+
+}
+
+/*=============== BASE ===============*/
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--small-font-size);
+  background-color: var(--body-color);
+}
+
+::selection {
+  background: var(--first-color);
+  color: var(--white-color);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  position: fixed;
+  max-width: 80%;
+  width: 100%;
+  max-height: 85%;
+  height: 100%;
+  padding: 40px 50px 40px 40px;
+  background: var(--white-color);
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  margin-inline: 12rem 1rem;
+  padding-block: 2rem;
+}
+
+.container header {
+  font-size: 1.5rem;
+  color: var(--black-color);
+  font-weight: 500;
+  text-align: left;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  font-family: var(--body-font);
+  margin-right: 10px;
+  height: 55px;
+  width: 15%;
+  color: var(--white-color);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--first-color);
+}
+
+button:hover {
+  background: rgb(130, 106, 251);
+}
+
+
+
+#stopButton {
+  background-color: red;
+}
+
+#stopButton:hover {
+  background-color: darkred;
+}
+
+.output {
+  max-width: 70%;
+  width: 100%;
+  max-height: 40%;
+  height: 100%;
+  padding: 40px 50px 40px 40px;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  padding-block: 2rem;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+div {
+  float: left;
+  width: 33%;
+  padding: 0 10px;
+}
+
+input {
+  width: 100px;
+  position: relative;
+  height: 30px;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+input label {
+  color: #333;
+}
+
+input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+select {
+  width: 30%;
+  position: relative;
+  height: 40px;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+textarea {
+  width: 100%;
+  position: relative;
+  height: 40px;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+/*=============== SIDEBAR ===============*/
+
+
+.nav {
+  width: 72px;
+  height: max-content;
+  position: fixed;
+  inset: 0;
+  margin: auto 0;
+}
+.nav__list {
+  position: relative;
+  background-color: var(--first-color);
+  padding-block: 70px;
+  border-radius: 0 51px 51px 0;
+  display: grid;
+  justify-content: center;
+  row-gap: 2rem;
+}
+.nav__link {
+  position: relative;
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background 0.4s;
+}
+.nav__link i {
+  font-size: 1.25rem;
+  color: var(--white-color);
+  transition: color 0.4s;
+}
+.nav__link:hover .nav__name {
+  opacity: 1;
+  transform: translateX(48px);
+}
+.nav__name {
+  position: absolute;
+  top: 0;
+  transform: translateX(56px);
+  background-color: var(--black-color);
+  color: var(--white-color);
+  font-size: var(--small-font-size);
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 3rem;
+  pointer-events: none;
+  transition: transform 0.5s, opacity 0.5s;
+  opacity: 0;
+}
+.nav__circle-1, .nav__circle-2 {
+  width: 80px;
+  height: 80px;
+  background-color: var(--body-color);
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  z-index: 10;
+}
+.nav__circle-1 {
+  top: -78px;
+}
+.nav__circle-2 {
+  bottom: -78px;
+}
+.nav__square-1, .nav__square-2 {
+  width: 35px;
+  height: 40px;
+  background-color: var(--first-color);
+  position: absolute;
+  left: 0;
+  z-index: 1;
+}
+.nav__square-1 {
+  top: -39px;
+}
+.nav__square-2 {
+  bottom: -39px;
+}
+
+/* Active link */
+.active-link {
+  background-color: var(--white-color);
+}
+.active-link i {
+  color: var(--first-color);
+}

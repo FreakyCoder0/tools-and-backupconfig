@@ -1,0 +1,84 @@
+[2023-06-13 11:22:13,955: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:498: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2023-06-13 11:22:13,964: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:498: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2023-06-13 11:24:46,713: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:498: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2023-06-13 11:24:46,734: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:498: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2023-06-13 11:25:43,985: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:498: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2023-06-13 11:25:44,121: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:498: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2023-06-13 14:02:00,232: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 336, in start
+    blueprint.start(self)
+  File "/home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 726, in start
+    c.loop(*c.loop_args())
+  File "/home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+  File "/home/harsh/NMSproject/venv/lib/python3.10/site-packages/kombu/asynchronous/hub.py", line 317, in create_loop
+    events = poll(poll_timeout)
+  File "/home/harsh/NMSproject/venv/lib/python3.10/site-packages/kombu/utils/eventio.py", line 83, in poll
+    return self._epoll.poll(timeout if timeout is not None else -1)
+  File "/home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/apps/worker.py", line 289, in _handle_request
+    safe_say(f'worker: {how} shutdown (MainProcess)')
+  File "/home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/apps/worker.py", line 81, in safe_say
+    print(f'\n{msg}', file=sys.__stderr__, flush=True)
+OSError: [Errno 5] Input/output error
+[2023-06-13 14:02:00,341: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:386: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2023-06-13 14:02:00,391: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:498: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2023-06-13 14:02:00,426: WARNING/MainProcess] /home/harsh/NMSproject/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py:498: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2023-06-13 14:02:01,576: ERROR/MainProcess] Process 'ForkPoolWorker-8' pid:34397 exited with 'exitcode 15'
+[2023-06-13 14:02:01,593: ERROR/MainProcess] Process 'ForkPoolWorker-7' pid:34396 exited with 'exitcode 15'
+[2023-06-13 14:02:01,605: ERROR/MainProcess] Process 'ForkPoolWorker-6' pid:34395 exited with 'exitcode 15'
+[2023-06-13 14:02:01,617: ERROR/MainProcess] Process 'ForkPoolWorker-5' pid:34394 exited with 'exitcode 15'
+[2023-06-13 14:02:01,629: ERROR/MainProcess] Process 'ForkPoolWorker-4' pid:34393 exited with 'exitcode 15'
+[2023-06-13 14:02:01,641: ERROR/MainProcess] Process 'ForkPoolWorker-3' pid:34392 exited with 'exitcode 15'
+[2023-06-13 14:02:01,653: ERROR/MainProcess] Process 'ForkPoolWorker-2' pid:34391 exited with 'exitcode 15'
+[2023-06-13 14:02:01,664: ERROR/MainProcess] Process 'ForkPoolWorker-1' pid:34390 exited with 'exitcode 15'
