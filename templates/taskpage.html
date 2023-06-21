@@ -45,11 +45,24 @@
   <main class="table">
     <section class="table__header">
       <h1>Task Page</h1>
-      <div class="input-group">
+      <!-- <div class="input-group">
         <input type="search" placeholder="Search Data...">
-      </div>
+      </div> -->
     </section>
-    <section class="table__body">
+    <div class="output" id="inputText">
+      <body>
+        {% for sts in st %}
+        <p>
+          <strong>Id:</strong>             {{sts.id}}<br>
+          <strong>Task_id:</strong>        {{sts.task_id}}<br>
+          <strong>Created at:</strong>     {{sts.created_at}}<br>
+          <strong>Scheduler type:</strong> {{sts.scheduler_type}}<br>
+          <strong>Logs:</strong>           {{sts.logs}}
+        </p>
+        {% endfor %}
+      </body>
+    </div>
+    <!-- <section class="table__body">
       <table>
         <thead>
           <tr>
@@ -63,14 +76,14 @@
         <tbody>
           {% for sts in st %}
           <tr>
-            <td> {{sts.id}} </td>
+            <td>  </td>
             <td> {{sts.task_id}}</td>
             <td> {{sts.logs}} </td>
             <td> {{sts.created_at}} </td>
             <td> {{sts.scheduler_type}} </td>
           </tr>
           {% endfor %}
-          <!-- <tr>
+          //// <tr>
             <td> {{sts.id}} </td>
             <td> {{sts.scheduler_type}}</td>
             <td> {{sts.name}} </td>
@@ -168,11 +181,11 @@
               <p class="status pending">Pending</p>
             </td>
             <td> <strong>$149.70</strong> </td>
-          </tr> -->
+          </tr> ////
           
         </tbody>
       </table>
-    </section>
+    </section> -->
   </main>
 </body>
 <script>

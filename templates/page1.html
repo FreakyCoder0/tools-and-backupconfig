@@ -62,56 +62,82 @@
         </div>
       </div>
     </section>
-    <form action="page1" method="POST">
-      {% csrf_token %}
-      <section class="table__body">
-        <table>
-          <thead>
-            <tr>
-              <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-              <th> Scheduler Type <span class="icon-arrow">&UpArrow;</span></th>
-              <th> Job Name <span class="icon-arrow">&UpArrow;</span></th>
-              <th> Frequency <span class="icon-arrow">&UpArrow;</span></th>
-              <th> Owner <span class="icon-arrow">&UpArrow;</span></th>
-              <th> Recent Status <span class="icon-arrow">&UpArrow;</span></th>
-              <th> Action <span class="icon-arrow">&UpArrow;</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for sts in st %}
-            <tr>
-              <td>{{ sts.id }}</td>
-              <td>{{ sts.scheduler_type }}</td>
-              <td>{{ sts.name }}</td>
-              <td>{{ task_counts }}</td>
-              <td>{{ sts.email_subject }}</td>
-              <td>
-                <div class="status-buttons">
-                  <button id="task-1"
-                    class="status {% if task_counts >= 1 %}delivered{% else %}pending{% endif %}">1</button>
-                  <button id="task-2"
-                    class="status {% if task_counts >= 2 %}delivered{% else %}pending{% endif %}">2</button>
-                  <button id="task-3"
-                    class="status {% if task_counts >= 3 %}delivered{% else %}pending{% endif %}">3</button>
-                  <button id="task-4"
-                    class="status {% if task_counts >= 4 %}delivered{% else %}pending{% endif %}">4</button>
-                  <button id="task-5"
-                    class="status {% if task_counts >= 5 %}delivered{% else %}pending{% endif %}">5</button>
-                </div>
-              </td>
+    <section class="table__body">
+      <table>
+        <thead>
+          <tr>
+            <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+            <th> Scheduler Type <span class="icon-arrow">&UpArrow;</span></th>
+            <th> Job Name <span class="icon-arrow">&UpArrow;</span></th>
+            <th> Frequency <span class="icon-arrow">&UpArrow;</span></th>
+            <th> Owner <span class="icon-arrow">&UpArrow;</span></th>
+            <th> Recent Status <span class="icon-arrow">&UpArrow;</span></th>
+            <th> Action <span class="icon-arrow">&UpArrow;</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for sts in st %}
+          <tr>
+            <td>{{ sts.id }}</td>
+            <td>{{ sts.scheduler_type }}</td>
+            <td>{{ sts.name }}</td>
+            <td>{{ task_counts }}</td>
+            <td>{{ sts.email_subject }}</td>
+            <td>
+              <div class="status-buttons">
+                <form action="{% url 'taskpage' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" name="task_id" value="1" id="task-1"
+                    class="status {% if task_counts >= 1 %}delivered{% else %}pending{% endif %}">
+                    <span class="nav__link">1</span>
+                  </button>
+                </form>
+                <form action="{% url 'taskpage' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" name="task_id" value="2" id="task-2"
+                    class="status {% if task_counts >= 2 %}delivered{% else %}pending{% endif %}">
+                    <span class="nav__link">2</span>
+                  </button>
+                </form>
+                <form action="{% url 'taskpage' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" name="task_id" value="3" id="task-3"
+                    class="status {% if task_counts >= 3 %}delivered{% else %}pending{% endif %}">
+                    <span class="nav__link">3</span>
+                  </button>
+                </form>
+                <form action="{% url 'taskpage' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" name="task_id" value="4" id="task-4"
+                    class="status {% if task_counts >= 4 %}delivered{% else %}pending{% endif %}">
+                    <span class="nav__link">4</span>
+                  </button>
+                </form>
+                <form action="{% url 'taskpage' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" name="task_id" value="5" id="task-5"
+                    class="status {% if task_counts >= 5 %}delivered{% else %}pending{% endif %}">
+                    <span class="nav__link">5</span>
+                  </button>
+                </form>                
+              </div>
+            </td>
+            <form action="page1" method="POST">
+              {% csrf_token %}
               <td>
                 <div class="launcher-buttons">
-                  <button id="launcher-1" class="status-button delivered" type="submit" value="Submit"><i class="ri-arrow-up-fill"></i></button>
+                  <button id="launcher-1" class="status-button delivered" type="submit" value="Submit"><i
+                      class="ri-arrow-up-fill"></i></button>
                   <button id="launcher-2" class="status-button in-progress"><i class="ri-at-line"></i></button>
                   <button id="launcher-3" class="status-button failed"><i class="ri-delete-bin-line"></i></button>
                 </div>
               </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </section>
-    </form>
+            </form>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
   </main>
 </body>
 <script>
@@ -316,7 +342,7 @@
     a.click();
     a.remove();
   }
-  
+
 
 </script>
 

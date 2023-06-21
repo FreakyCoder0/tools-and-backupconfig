@@ -432,3 +432,25 @@ tbody td.active {
 .active-link i {
   color: var(--first-color);
 }
+
+.status-buttons {
+  display: flex;
+}
+
+.status-buttons form {
+  margin-right: 10px; /* Adjust the spacing between buttons if needed */
+}
+.output {
+  position: fixed;
+  max-width: 88%;
+  width: 100%;
+  max-height: 67%;
+  height: 100%;
+  padding: 40px 50px 40px 40px;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  padding-block: 2rem;
+  overflow: hidden;
+  overflow-y: scroll;
+}

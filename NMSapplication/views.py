@@ -27,10 +27,16 @@ def snmpwalk(IPAddress, option_SNMP, OID, SNMPPORT, CommStr=None, SNMP_Cred=None
             result = subprocess.run(['snmpwalk', '-v1', '-c', CommStr, IPAddress], capture_output=True, text=True)
             result = result.stdout
     elif option_SNMP == 'v2c':
+        print('**************IPAddress:',IPAddress)
+        print('**************OID:',OID)
+        print('**************SNMPPORT:',SNMPPORT)
+        print('**************CommStr:',CommStr)
+        print('**************SNMP_Cred:',SNMP_Cred)
+        print('**************SecName:',SecName)
         if CommStr is None:
             result = 'Community string not provided!'
         else:
-            result = subprocess.run(['snmpwalk', '-v2c', '-c', CommStr, IPAddress, OID], capture_output=True, text=True)
+            result = subprocess.run(['snmpwalk', '-v2c', '-c', CommStr, IPAddress], capture_output=True, text=True)
             result = result.stdout
     elif option_SNMP == 'v3':
         if SNMP_Cred == 'woAP':
@@ -173,6 +179,17 @@ def launchscheduler(request):
         logs="dcjbdhv dsvhd vjhgdv fhgvfhvfhv djj"
     )
   
+def taskpage(request):
+    if request.method == 'POST':
+        print('******************request:',request)
+        task_id = request.POST.get('task_id')
+        print('******************taskid:',task_id)
+        # Check if the request method is POST
+        serializers_data = Launchscheduler.objects.filter(scheduler_type='backup', id=task_id)
+        print('**********serializers_data', serializers_data)
+        # Do something with the task_id, such as passing it to a Python function or storing it in a database
+        return render(request, 'taskpage.html', {'st': serializers_data})
+    return render(request, 'taskpage.html')
 # from .tasks import test_func
 # def test(request):
 #     test_func.delay()
