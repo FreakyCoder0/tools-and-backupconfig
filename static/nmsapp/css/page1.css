@@ -198,9 +198,11 @@ tbody tr.hide td p {
 }
 
 .status {
-  padding: .4rem .6rem;
+  border-style: solid;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: .4rem .85rem;
   border-radius: 2rem;
-  text-align: center;
 }
 
 .status.delivered {
@@ -265,7 +267,7 @@ tbody td.active {
   color: #6c00bd;
 }
 
-.export__file {
+/* .export__file {
   position: relative;
 }
 
@@ -333,7 +335,7 @@ tbody td.active {
   transform: scale(1.05);
   background-color: var(--white-color);
   cursor: pointer;
-}
+} */
 
 .nav {
   width: 72px;

@@ -7,6 +7,7 @@ urlpatterns = [
     path("home",views.home,name='home'),
     path("page1",views.page1,name='page1'),
     path("input",views.scheduler,name='input'),
-    path("taskpage",views.taskpage,name='taskpage')
+    path("taskpage/<str:task_id>/",views.taskpage,name='taskpage'),
+    path("launched-scheduler",views.launchscheduler,name='launched-scheduler'),
     
 ]

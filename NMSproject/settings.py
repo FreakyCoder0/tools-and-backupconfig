@@ -144,3 +144,14 @@ CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 #celery beat
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'poasharshtestmail@gmail.com'
+EMAIL_HOST_PASSWORD = 'bvjppzmvmchgcxnc'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

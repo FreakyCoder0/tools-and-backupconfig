@@ -1,16 +1,20 @@
 from celery import shared_task
-from time import sleep
-from .models import Launchscheduler
+from NMSapplication.utils.backup_launcher import BackupLuancher
+# ,TopologyDiscovery
+
 
 @shared_task(name = 'backup',bind = True)
-def test_func(*args,**kwargs):
-    print("****************************hcdscdjs*")
-    sleep(5)
-    print("****************************dncbds*")
-    #operations
-    for i in range(10):
-        print(i)
-    print("Done tasks here")
-    task_id = request.GET.get('task_id')
+def backup_launch(self,*args,**kwargs):
+    task_id = self.request.id  
+    backup_obj = BackupLuancher(task_id)
+    backup_obj.main()
+
+# @shared_task(name = 'backup',bind = True)
+# def topology_discovery(self,*args,**kwargs):
+#     task_id = self.request.id  
+#     backup_obj = TopologyDiscovery(task_id)
+#     backup_obj.main()
     
-    return task_id
+    
+
+   

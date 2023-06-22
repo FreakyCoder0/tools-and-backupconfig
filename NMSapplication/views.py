@@ -1,21 +1,15 @@
-from django.http import HttpResponse, Http404
 import subprocess
-from django.shortcuts import redirect, render
-from rest_framework.response import Response
+from django.shortcuts import render
 from .models import *
-from rest_framework import status
-from .tasks import test_func
-from django.db.models import Subquery, OuterRef
-from .serializers import LaunchschedulerSerilaizers, SchedulerSerilaizers
-
+from .tasks import backup_launch
+from .serializers import SchedulerSerilaizers
+from django.core.mail import send_mail
 
 def ping(IPAddress, count):
-    print("******in function ping", IPAddress)
     result = subprocess.run(['ping', '-c', str(count), IPAddress], capture_output=True, text=True)
     return result.stdout
 
 def traceroute(IPAddress):
-    print("******in function traceroute", IPAddress)
     result = subprocess.run(['traceroute', IPAddress], capture_output=True, text=True)
     return result.stdout
 
@@ -27,12 +21,6 @@ def snmpwalk(IPAddress, option_SNMP, OID, SNMPPORT, CommStr=None, SNMP_Cred=None
             result = subprocess.run(['snmpwalk', '-v1', '-c', CommStr, IPAddress], capture_output=True, text=True)
             result = result.stdout
     elif option_SNMP == 'v2c':
-        print('**************IPAddress:',IPAddress)
-        print('**************OID:',OID)
-        print('**************SNMPPORT:',SNMPPORT)
-        print('**************CommStr:',CommStr)
-        print('**************SNMP_Cred:',SNMP_Cred)
-        print('**************SecName:',SecName)
         if CommStr is None:
             result = 'Community string not provided!'
         else:
@@ -119,18 +107,6 @@ def scheduler(request):
         daysmonth   = request.POST.get('daysmonth')
         monthyear   = request.POST.get('monthyear')
         scheduler_type = request.POST.get('scheduler_type')
-        print('********nameinput:', nameinput)
-        print('********option:', option)
-        print('********includehost:', includehost)
-        print('********emailsub:', emailsub)
-        print('********emailid:', emailid)
-        print('********notigrp:', notigrp)
-        print('********minutes:', minutes)
-        print('********hours:', hours)
-        print('********daysweek:', daysweek)
-        print('********daysmonth:', daysmonth)
-        print('********monthyear:', monthyear)
-        print('********scheduler_type:', scheduler_type)
         # Create an instance of YourModel
         data, created = Scheduler.objects.get_or_create(
             name = nameinput,   # backuphost
@@ -146,11 +122,9 @@ def scheduler(request):
         return render(request, 'input.html')
 
 
-def page1(request):
+def page1(request, message=None):
     sche = Scheduler.objects.all()
-    # Check if the request method is POST
     serializers_data = SchedulerSerilaizers(sche, many=True)
-    print('****************serializers_data', serializers_data.data)
     task_counts = {}
     for index, data in enumerate(serializers_data.data, start=1):
         logs_data = data.get('logs_data')
@@ -159,38 +133,22 @@ def page1(request):
             task_counts[index] = len(task_ids)
         else:
             task_counts[index] = 0
+    if not message:
+        message = ''
 
     dictionary = task_counts
     value = dictionary[1]
     if request.method == 'POST':
         launchscheduler(request)
-        return render(request, 'page1.html', {'st': serializers_data.data,'task_counts': value})
-    print('**********taskcount:', value)
-    return render(request, 'page1.html', {'st': serializers_data.data,'task_counts': value})
+        message = "Scheduler Launched Successfully"
+        return render(request, 'page1.html', {'st': serializers_data.data, 'task_counts': value, 'message': message})
+    return render(request, 'page1.html', {'st': serializers_data.data, 'task_counts': value, 'message': message})
 
 
 def launchscheduler(request):
-    print("*************1")
-    task_id = test_func.apply_async()
-    print("*************2", task_id)
-    created = Launchscheduler.objects.create(
-        task_id=task_id,
-        scheduler_type='backup',
-        logs="dcjbdhv dsvhd vjhgdv fhgvfhvfhv djj"
-    )
+    task_id = backup_launch.apply_async()
+    
   
-def taskpage(request):
-    if request.method == 'POST':
-        print('******************request:',request)
-        task_id = request.POST.get('task_id')
-        print('******************taskid:',task_id)
-        # Check if the request method is POST
-        serializers_data = Launchscheduler.objects.filter(scheduler_type='backup', id=task_id)
-        print('**********serializers_data', serializers_data)
-        # Do something with the task_id, such as passing it to a Python function or storing it in a database
-        return render(request, 'taskpage.html', {'st': serializers_data})
-    return render(request, 'taskpage.html')
-# from .tasks import test_func
-# def test(request):
-#     test_func.delay()
-#     return HttpResponse("done here in views")
+def taskpage(request,task_id):
+    serializers_data = Launchscheduler.objects.filter(scheduler_type='backup', task_id=task_id)
+    return render(request, 'taskpage.html', {'st': serializers_data})

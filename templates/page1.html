@@ -49,18 +49,6 @@
       <div class="input-group">
         <input type="search" placeholder="Search Data...">
       </div>
-      <div class="export__file">
-        <label for="export-file" class="export__file-btn" title="Export File"><i
-            class="ri-dashboard-3-line"></i></label>
-        <input type="checkbox" id="export-file">
-        <div class="export__file-options">
-          <label>Export As &nbsp; &#10140;</label>
-          <label for="export-file" id="toPDF">PDF</label>
-          <label for="export-file" id="toJSON">JSON</label>
-          <label for="export-file" id="toCSV">CSV</label>
-          <label for="export-file" id="toEXCEL">EXCEL</label>
-        </div>
-      </div>
     </section>
     <section class="table__body">
       <table>
@@ -77,62 +65,53 @@
         </thead>
         <tbody>
           {% for sts in st %}
+
           <tr>
-            <td>{{ sts.id }}</td>
+            <td> {{sts.id}} </td>
             <td>{{ sts.scheduler_type }}</td>
             <td>{{ sts.name }}</td>
             <td>{{ task_counts }}</td>
             <td>{{ sts.email_subject }}</td>
             <td>
               <div class="status-buttons">
-                <form action="{% url 'taskpage' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" name="task_id" value="1" id="task-1"
-                    class="status {% if task_counts >= 1 %}delivered{% else %}pending{% endif %}">
-                    <span class="nav__link">1</span>
-                  </button>
-                </form>
-                <form action="{% url 'taskpage' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" name="task_id" value="2" id="task-2"
-                    class="status {% if task_counts >= 2 %}delivered{% else %}pending{% endif %}">
-                    <span class="nav__link">2</span>
-                  </button>
-                </form>
-                <form action="{% url 'taskpage' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" name="task_id" value="3" id="task-3"
-                    class="status {% if task_counts >= 3 %}delivered{% else %}pending{% endif %}">
-                    <span class="nav__link">3</span>
-                  </button>
-                </form>
-                <form action="{% url 'taskpage' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" name="task_id" value="4" id="task-4"
-                    class="status {% if task_counts >= 4 %}delivered{% else %}pending{% endif %}">
-                    <span class="nav__link">4</span>
-                  </button>
-                </form>
-                <form action="{% url 'taskpage' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" name="task_id" value="5" id="task-5"
-                    class="status {% if task_counts >= 5 %}delivered{% else %}pending{% endif %}">
-                    <span class="nav__link">5</span>
-                  </button>
-                </form>                
+                <a {% if sts.logs_data.0.task_id %}href="{% url 'taskpage' sts.logs_data.0.task_id %}" {% endif %}
+                  name="task_id" value="{% if sts.logs_data.0 %}{{ sts.logs_data.0.task_id }}{% endif %}" id="task-1"
+                  class="status {% if task_counts >= 1 %}delivered{% else %}pending{% endif %}">
+                  <span class="nav__link">1</span>
+                </a>
+
+                <a {% if sts.logs_data.1.task_id %}href="{% url 'taskpage' sts.logs_data.1.task_id %}" {% endif %}
+                  name="task_id" value="{% if sts.logs_data.1 %}{{sts.logs_data.1.task_id}}{% endif %} " id="task-2"
+                  class="status {% if task_counts >= 2 %}delivered{% else %}pending{% endif %}"><span
+                    class="nav__link">2</span>
+                </a>
+                <a {% if sts.logs_data.2.task_id %}href="{% url 'taskpage' sts.logs_data.2.task_id %}" {% endif %}
+                  name="task_id" value="{% if sts.logs_data.2 %}{{sts.logs_data.2.task_id}}{% endif %} " id="task-3"
+                  class="status {% if task_counts >= 3 %}delivered{% else %}pending{% endif %}"><span
+                    class="nav__link">3</span>
+                </a>
+                <a {% if sts.logs_data.3.task_id %}href="{% url 'taskpage' sts.logs_data.3.task_id %}" {% endif %}
+                  name="task_id" value="{% if sts.logs_data.3 %}{{sts.logs_data.3.task_id}}{% endif %} " id="task-4"
+                  class="status {% if task_counts >= 4 %}delivered{% else %}pending{% endif %}"><span
+                    class="nav__link">4</span>
+                </a>
+                <a {% if sts.logs_data.4.task_id %}href="{% url 'taskpage' sts.logs_data.4.task_id %}" {% endif %}
+                  name="task_id" value="{% if sts.logs_data.4 %}{{sts.logs_data.4.task_id}}{% endif %} " id="task-5"
+                  class="status {% if task_counts >= 5 %}delivered{% else %}pending{% endif %}"><span
+                    class="nav__link">5</span>
+                </a>
               </div>
             </td>
-            <form action="page1" method="POST">
-              {% csrf_token %}
-              <td>
-                <div class="launcher-buttons">
-                  <button id="launcher-1" class="status-button delivered" type="submit" value="Submit"><i
-                      class="ri-arrow-up-fill"></i></button>
-                  <button id="launcher-2" class="status-button in-progress"><i class="ri-at-line"></i></button>
-                  <button id="launcher-3" class="status-button failed"><i class="ri-delete-bin-line"></i></button>
-                </div>
-              </td>
-            </form>
+            <td>
+              <div class="launcher-buttons">
+                <form action="page1" method="POST">
+                  {% csrf_token %}
+                  <button id="launcher-1" class="status-button delivered" type="submit" value="Submit"
+                    onclick="showAlert('{{ message }}')">
+                    <i class="ri-arrow-up-fill"></i>
+                  </button>
+                </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -141,6 +120,12 @@
   </main>
 </body>
 <script>
+  const message = '{{ message }}';
+
+  // Display the message in an alert
+  if (message) {
+    alert(message);
+  }
   function updateStatus(buttonId) {
     var button = document.getElementById(buttonId);
     button.classList.remove("pending"); // Remove the "pending" class
@@ -198,150 +183,150 @@
       .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
   }
 
-  // 3. Converting HTML table to PDF
+  // // 3. Converting HTML table to PDF
 
-  const pdf_btn = document.querySelector('#toPDF');
-  const customers_table = document.querySelector('#customers_table');
+  // const pdf_btn = document.querySelector('#toPDF');
+  // const customers_table = document.querySelector('#customers_table');
 
-  const toPDF = function (customers_table) {
-    const html_code = `
-    <link rel="stylesheet" href="style.css">
-    <main class="table" >${customers_table.innerHTML}</main>
-    `;
+  // const toPDF = function (customers_table) {
+  //   const html_code = `
+  //   <link rel="stylesheet" href="style.css">
+  //   <main class="table" >${customers_table.innerHTML}</main>
+  //   `;
 
-    const new_window = window.open();
-    new_window.document.write(html_code);
+  //   const new_window = window.open();
+  //   new_window.document.write(html_code);
 
-    setTimeout(() => {
-      new_window.print();
-      new_window.close();
-    }, 400);
-  }
+  //   setTimeout(() => {
+  //     new_window.print();
+  //     new_window.close();
+  //   }, 400);
+  // }
 
-  pdf_btn.onclick = () => {
-    toPDF(customers_table);
-  }
+  // pdf_btn.onclick = () => {
+  //   toPDF(customers_table);
+  // }
 
-  // 4. Converting HTML table to JSON
+  // // 4. Converting HTML table to JSON
 
-  const json_btn = document.querySelector('#toJSON');
+  // const json_btn = document.querySelector('#toJSON');
 
-  const toJSON = function (table) {
-    let table_data = [],
-      t_head = [],
+  // const toJSON = function (table) {
+  //   let table_data = [],
+  //     t_head = [],
 
-      t_headings = table.querySelectorAll('th'),
-      t_rows = table.querySelectorAll('tbody tr');
+  //     t_headings = table.querySelectorAll('th'),
+  //     t_rows = table.querySelectorAll('tbody tr');
 
-    for (let t_heading of t_headings) {
-      let actual_head = t_heading.textContent.trim().split(' ');
+  //   for (let t_heading of t_headings) {
+  //     let actual_head = t_heading.textContent.trim().split(' ');
 
-      t_head.push(actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase());
-    }
+  //     t_head.push(actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase());
+  //   }
 
-    t_rows.forEach(row => {
-      const row_object = {},
-        t_cells = row.querySelectorAll('td');
+  //   t_rows.forEach(row => {
+  //     const row_object = {},
+  //       t_cells = row.querySelectorAll('td');
 
-      t_cells.forEach((t_cell, cell_index) => {
-        const img = t_cell.querySelector('img');
-        if (img) {
-          row_object['customer image'] = decodeURIComponent(img.src);
-        }
-        row_object[t_head[cell_index]] = t_cell.textContent.trim();
-      })
-      table_data.push(row_object);
-    })
+  //     t_cells.forEach((t_cell, cell_index) => {
+  //       const img = t_cell.querySelector('img');
+  //       if (img) {
+  //         row_object['customer image'] = decodeURIComponent(img.src);
+  //       }
+  //       row_object[t_head[cell_index]] = t_cell.textContent.trim();
+  //     })
+  //     table_data.push(row_object);
+  //   })
 
-    return JSON.stringify(table_data, null, 4);
-  }
+  //   return JSON.stringify(table_data, null, 4);
+  // }
 
-  json_btn.onclick = () => {
-    const json = toJSON(customers_table);
-    downloadFile(json, 'json')
-  }
+  // json_btn.onclick = () => {
+  //   const json = toJSON(customers_table);
+  //   downloadFile(json, 'json')
+  // }
 
-  // 5. Converting HTML table to CSV File
+  // // 5. Converting HTML table to CSV File
 
-  const csv_btn = document.querySelector('#toCSV');
+  // const csv_btn = document.querySelector('#toCSV');
 
-  const toCSV = function (table) {
+  // const toCSV = function (table) {
 
-    const t_heads = table.querySelectorAll('th'),
-      tbody_rows = table.querySelectorAll('tbody tr');
+  //   const t_heads = table.querySelectorAll('th'),
+  //     tbody_rows = table.querySelectorAll('tbody tr');
 
-    const headings = [...t_heads].map(head => {
-      let actual_head = head.textContent.trim().split(' ');
-      return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
-    }).join(',') + ',' + 'image name';
+  //   const headings = [...t_heads].map(head => {
+  //     let actual_head = head.textContent.trim().split(' ');
+  //     return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
+  //   }).join(',') + ',' + 'image name';
 
-    const table_data = [...tbody_rows].map(row => {
-      const cells = row.querySelectorAll('td'),
-        img = decodeURIComponent(row.querySelector('img').src),
-        data_without_img = [...cells].map(cell => cell.textContent.replace(/,/g, ".").trim()).join(',');
+  //   const table_data = [...tbody_rows].map(row => {
+  //     const cells = row.querySelectorAll('td'),
+  //       img = decodeURIComponent(row.querySelector('img').src),
+  //       data_without_img = [...cells].map(cell => cell.textContent.replace(/,/g, ".").trim()).join(',');
 
-      return data_without_img + ',' + img;
-    }).join('\n');
+  //     return data_without_img + ',' + img;
+  //   }).join('\n');
 
-    return headings + '\n' + table_data;
-  }
+  //   return headings + '\n' + table_data;
+  // }
 
-  csv_btn.onclick = () => {
-    const csv = toCSV(customers_table);
-    downloadFile(csv, 'csv', 'customer orders');
-  }
+  // csv_btn.onclick = () => {
+  //   const csv = toCSV(customers_table);
+  //   downloadFile(csv, 'csv', 'customer orders');
+  // }
 
-  // 6. Converting HTML table to EXCEL File
+  // // 6. Converting HTML table to EXCEL File
 
-  const excel_btn = document.querySelector('#toEXCEL');
+  // const excel_btn = document.querySelector('#toEXCEL');
 
-  const toExcel = function (table) {
-    // Code For SIMPLE TABLE
-    // const t_rows = table.querySelectorAll('tr');
-    // return [...t_rows].map(row => {
-    //     const cells = row.querySelectorAll('th, td');
-    //     return [...cells].map(cell => cell.textContent.trim()).join('\t');
-    // }).join('\n');
+  // const toExcel = function (table) {
+  //   // Code For SIMPLE TABLE
+  //   // const t_rows = table.querySelectorAll('tr');
+  //   // return [...t_rows].map(row => {
+  //   //     const cells = row.querySelectorAll('th, td');
+  //   //     return [...cells].map(cell => cell.textContent.trim()).join('\t');
+  //   // }).join('\n');
 
-    const t_heads = table.querySelectorAll('th'),
-      tbody_rows = table.querySelectorAll('tbody tr');
+  //   const t_heads = table.querySelectorAll('th'),
+  //     tbody_rows = table.querySelectorAll('tbody tr');
 
-    const headings = [...t_heads].map(head => {
-      let actual_head = head.textContent.trim().split(' ');
-      return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
-    }).join('\t') + '\t' + 'image name';
+  //   const headings = [...t_heads].map(head => {
+  //     let actual_head = head.textContent.trim().split(' ');
+  //     return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
+  //   }).join('\t') + '\t' + 'image name';
 
-    const table_data = [...tbody_rows].map(row => {
-      const cells = row.querySelectorAll('td'),
-        img = decodeURIComponent(row.querySelector('img').src),
-        data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
+  //   const table_data = [...tbody_rows].map(row => {
+  //     const cells = row.querySelectorAll('td'),
+  //       img = decodeURIComponent(row.querySelector('img').src),
+  //       data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
 
-      return data_without_img + '\t' + img;
-    }).join('\n');
+  //     return data_without_img + '\t' + img;
+  //   }).join('\n');
 
-    return headings + '\n' + table_data;
-  }
+  //   return headings + '\n' + table_data;
+  // }
 
-  excel_btn.onclick = () => {
-    const excel = toExcel(customers_table);
-    downloadFile(excel, 'excel');
-  }
+  // excel_btn.onclick = () => {
+  //   const excel = toExcel(customers_table);
+  //   downloadFile(excel, 'excel');
+  // }
 
-  const downloadFile = function (data, fileType, fileName = '') {
-    const a = document.createElement('a');
-    a.download = fileName;
-    const mime_types = {
-      'json': 'application/json',
-      'csv': 'text/csv',
-      'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    }
-    a.href = `
-        data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}
-    `;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }
+  // const downloadFile = function (data, fileType, fileName = '') {
+  //   const a = document.createElement('a');
+  //   a.download = fileName;
+  //   const mime_types = {
+  //     'json': 'application/json',
+  //     'csv': 'text/csv',
+  //     'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  //   }
+  //   a.href = `
+  //       data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}
+  //   `;
+  //   document.body.appendChild(a);
+  //   a.click();
+  //   a.remove();
+  // }
 
 
 </script>
