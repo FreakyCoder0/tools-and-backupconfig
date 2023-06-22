@@ -13,6 +13,7 @@ def traceroute(IPAddress):
     result = subprocess.run(['traceroute', IPAddress], capture_output=True, text=True)
     return result.stdout
 
+
 def snmpwalk(IPAddress, option_SNMP, OID, SNMPPORT, CommStr=None, SNMP_Cred=None, SecName=None, Apassword=None, Aprotocol=None, Pprotocol=None, Ppassphrase=None):
     if option_SNMP == 'v1':
         if CommStr is None:
