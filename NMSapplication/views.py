@@ -4,6 +4,7 @@ from .models import *
 from .tasks import backup_launch
 from .serializers import SchedulerSerilaizers
 from django.core.mail import send_mail
+from celery.execute import send_task
 
 def ping(IPAddress, count):
     result = subprocess.run(['ping', '-c', str(count), IPAddress], capture_output=True, text=True)
@@ -52,7 +53,6 @@ def snmpwalk(IPAddress, option_SNMP, OID, SNMPPORT, CommStr=None, SNMP_Cred=None
         result = 'Invalid SNMP version selected!'
     return result
 
-
 def home(request):
     if request.method == "POST":
 
@@ -93,7 +93,6 @@ def home(request):
     else:
         return render(request, 'home.html')
 
-
 def scheduler(request):
     if request.method == "POST":
         nameinput   = request.POST.get('name')
@@ -122,8 +121,7 @@ def scheduler(request):
     else:
         return render(request, 'input.html')
 
-
-def page1(request, message=None):
+def page1(request,task_name=None, message=None,*args,**kwargs):
     sche = Scheduler.objects.all()
     serializers_data = SchedulerSerilaizers(sche, many=True)
     task_counts = {}
@@ -140,15 +138,12 @@ def page1(request, message=None):
     dictionary = task_counts
     value = dictionary[1]
     if request.method == 'POST':
-        launchscheduler(request)
+        # backup_launch.apply_async()
+        print("**************taskname",task_name)
+        send_task(task_name, args=args, kwargs=kwargs)
         message = "Scheduler Launched Successfully"
         return render(request, 'page1.html', {'st': serializers_data.data, 'task_counts': value, 'message': message})
     return render(request, 'page1.html', {'st': serializers_data.data, 'task_counts': value, 'message': message})
-
-
-def launchscheduler(request):
-    task_id = backup_launch.apply_async()
-    
   
 def taskpage(request,task_id):
     serializers_data = Launchscheduler.objects.filter(scheduler_type='backup', task_id=task_id)

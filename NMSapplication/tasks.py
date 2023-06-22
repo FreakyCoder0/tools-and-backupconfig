@@ -3,7 +3,7 @@ from NMSapplication.utils.backup_launcher import BackupLuancher
 # ,TopologyDiscovery
 
 
-@shared_task(name = 'backup',bind = True)
+@shared_task(name ='backup',bind = True)
 def backup_launch(self,*args,**kwargs):
     task_id = self.request.id  
     backup_obj = BackupLuancher(task_id)

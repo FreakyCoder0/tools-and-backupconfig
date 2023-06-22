@@ -104,7 +104,7 @@
             </td>
             <td>
               <div class="launcher-buttons">
-                <form action="page1" method="POST">
+                <form action="{% url 'page1' sts.scheduler_type %}" method="POST">
                   {% csrf_token %}
                   <button id="launcher-1" class="status-button delivered" type="submit" value="Submit"
                     onclick="showAlert('{{ message }}')">
