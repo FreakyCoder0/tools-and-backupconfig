@@ -76,28 +76,28 @@
               <div class="status-buttons">
                 <a {% if sts.logs_data.0.task_id %}href="{% url 'taskpage' sts.logs_data.0.task_id %}" {% endif %}
                   name="task_id" value="{% if sts.logs_data.0 %}{{ sts.logs_data.0.task_id }}{% endif %}" id="task-1"
-                  class="status {% if task_counts >= 1 %}delivered{% else %}pending{% endif %}">
+                  class="status {% if sts.logs_data.0.task_id %}delivered{% else %}pending{% endif %}">
                   <span class="nav__link">1</span>
                 </a>
 
                 <a {% if sts.logs_data.1.task_id %}href="{% url 'taskpage' sts.logs_data.1.task_id %}" {% endif %}
                   name="task_id" value="{% if sts.logs_data.1 %}{{sts.logs_data.1.task_id}}{% endif %} " id="task-2"
-                  class="status {% if task_counts >= 2 %}delivered{% else %}pending{% endif %}"><span
+                  class="status {% if sts.logs_data.1.task_id %}delivered{% else %}pending{% endif %}"><span
                     class="nav__link">2</span>
                 </a>
                 <a {% if sts.logs_data.2.task_id %}href="{% url 'taskpage' sts.logs_data.2.task_id %}" {% endif %}
                   name="task_id" value="{% if sts.logs_data.2 %}{{sts.logs_data.2.task_id}}{% endif %} " id="task-3"
-                  class="status {% if task_counts >= 3 %}delivered{% else %}pending{% endif %}"><span
+                  class="status {% if sts.logs_data.2.task_id %}delivered{% else %}pending{% endif %}"><span
                     class="nav__link">3</span>
                 </a>
                 <a {% if sts.logs_data.3.task_id %}href="{% url 'taskpage' sts.logs_data.3.task_id %}" {% endif %}
                   name="task_id" value="{% if sts.logs_data.3 %}{{sts.logs_data.3.task_id}}{% endif %} " id="task-4"
-                  class="status {% if task_counts >= 4 %}delivered{% else %}pending{% endif %}"><span
+                  class="status {% if sts.logs_data.3.task_id %}delivered{% else %}pending{% endif %}"><span
                     class="nav__link">4</span>
                 </a>
                 <a {% if sts.logs_data.4.task_id %}href="{% url 'taskpage' sts.logs_data.4.task_id %}" {% endif %}
                   name="task_id" value="{% if sts.logs_data.4 %}{{sts.logs_data.4.task_id}}{% endif %} " id="task-5"
-                  class="status {% if task_counts >= 5 %}delivered{% else %}pending{% endif %}"><span
+                  class="status {% if sts.logs_data.4.task_id %}delivered{% else %}pending{% endif %}"><span
                     class="nav__link">5</span>
                 </a>
               </div>
