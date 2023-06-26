@@ -54,7 +54,7 @@
           <strong>Task_id:</strong>        {{sts.task_id}}<br>
           <strong>Created at:</strong>     {{sts.created_at}}<br>
           <strong>Scheduler type:</strong> {{sts.scheduler_type}}<br>
-          <strong>Logs:</strong>           {{sts.logs}}
+          <strong>Logs:</strong>           <pre>{{sts.logs|linebreaksbr}}</pre>
         </p>
         {% endfor %}
       </body>

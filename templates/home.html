@@ -51,7 +51,7 @@
       <label for="option">Choose an option:</label>
       <select name="option" id="option" onchange="showFields()">
         <option value="none">None</option>
-        <option value="ping" >PING</option>
+        <option value="ping">PING</option>
         <option value="traceroute">Traceroute</option>
         <option value="snmpwalk">SNMPWALK</option>
       </select>
@@ -130,25 +130,30 @@
 
       <div class="button-container">
         <button id="submitButton" type="submit" value="Submit">Submit</button>
-        <button id="resetButton" type="reset" value = "reset" onclick="resetValues()">Reset</button>
+        <button id="resetButton" type="reset" value="reset" onclick="resetValues()">Reset</button>
         <button id="stopButton" onclick="stopFunction()">Stop</button>
       </div>
       <label for="subject"><br>Output:</label>
+      {% if result %}
       <div class="output" id="inputText">
 
         <body>
-          <p>{{ result|linebreaksbr }}</p>
+          <p>
+          <pre>{{ result|linebreaksbr }}</pre>
+          </p>
         </body>
       </div>
+      {% endif %}
+
     </form>
-    
+
 
 
   </section>
   <script>
 
-    function resetValues(){
-      document.getElementById('inputText').innerHTML='';
+    function resetValues() {
+      document.getElementById('inputText').innerHTML = '';
       document.forms.harsh.reset();
     }
     const navLink = document.querySelectorAll('.nav__link');
@@ -203,7 +208,7 @@
           }
         }
       }
-      
+
     }
   </script>
 </body>

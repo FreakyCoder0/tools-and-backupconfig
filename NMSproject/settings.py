@@ -155,3 +155,4 @@ EMAIL_HOST_PASSWORD = 'bvjppzmvmchgcxnc'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+

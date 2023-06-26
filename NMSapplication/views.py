@@ -148,6 +148,6 @@ def page1(request,task_name=None, message=None,*args,**kwargs):
     return render(request, 'page1.html', {'st': serializers_data.data, 'message': message})
   
 def taskpage(request,task_id):
-    serializers_data = Launchscheduler.objects.filter(scheduler_type='backup', task_id=task_id)
+    serializers_data = Launchscheduler.objects.filter(task_id=task_id)
     return render(request, 'taskpage.html', {'st': serializers_data})
 
