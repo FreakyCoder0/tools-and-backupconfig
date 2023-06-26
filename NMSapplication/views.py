@@ -123,25 +123,11 @@ def scheduler(request):
 
 def page1(request,task_name=None, message=None,*args,**kwargs):
     sche = Scheduler.objects.all()
-    print('****************sche:', sche)
     serializers_data = SchedulerSerilaizers(sche, many=True)
-    print('****************serializers_data:', serializers_data.data)
-    # task_counts = {}
-    # for index, data in enumerate(serializers_data.data, start=1):
-    #     logs_data = data.get('logs_data')
-    #     if logs_data:
-    #         task_ids = [log['task_id'] for log in logs_data]
-    #         task_counts[index] = len(task_ids)
-    #     else:
-    #         task_counts[index] = 0
     if not message:
         message = ''
-
-    # dictionary = task_counts
-    # value = dictionary[1]
     if request.method == 'POST':
         # backup_launch.apply_async()
-        print("**************taskname",task_name)
         send_task(task_name, args=args, kwargs=kwargs)
         message = "Scheduler Launched Successfully"
         return render(request, 'page1.html', {'st': serializers_data.data, 'message': message})

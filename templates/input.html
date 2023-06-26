@@ -52,13 +52,15 @@
         <input type="text" id="name" name="name">
       </div>
 
-      <label for="option">Choose an option:</label>
-      <select name="devicevendor" id="devicevendor" onchange="showFields()">
-        <option value="none">None</option>
-        <option value="cisco" >CISCO</option>
-        <option value="jumpi">Jumpi</option>
-        <option value="dell">Dell</option>
-      </select>
+      <div>
+        <label for="option">Choose an option:</label>
+        <select name="devicevendor" id="devicevendor" onchange="showFields()">
+          <option value="none">None</option>
+          <option value="cisco">CISCO</option>
+          <option value="jumpi">Jumpi</option>
+          <option value="dell">Dell</option>
+        </select>
+      </div>
 
       <div>
         <label for="includehost">Include Host<span style="color:red">*</span>: </label>
@@ -118,26 +120,28 @@
 
       <div class="button-container">
         <button id="submitButton" type="submit" value="Submit">Submit</button>
-        <button id="resetButton" type="reset" value = "reset" onclick="resetValues()">Reset</button>
-        <button id="stopButton" onclick="stopFunction()">Stop</button>
       </div>
-      
+
+      {% if result %}
       <div class="output" id="inputText">
+        <label for="subject"><br>Output:</label>
 
         <body>
-          <label for="subject"><br>Output:</label>
-          <p>{{ result|linebreaksbr }}</p>
+          <p>
+          <pre>{{ result|linebreaksbr }}</pre>
+          </p>
         </body>
       </div>
+      {% endif %}
     </form>
-    
+
 
 
   </section>
   <script>
 
-    function resetValues(){
-      document.getElementById('inputText').innerHTML='';
+    function resetValues() {
+      document.getElementById('inputText').innerHTML = '';
       document.forms.harsh.reset();
     }
     const navLink = document.querySelectorAll('.nav__link');

@@ -118,12 +118,14 @@ button:hover {
 
 div {
   float: left;
-  width: 33%;
+  width: 48%;
   padding: 0 10px;
+  text-align: right;
 }
 
 input {
-  width: 100px;
+
+  width: 200px;
   position: relative;
   height: 30px;
   outline: none;
@@ -144,9 +146,9 @@ input:focus {
 }
 
 select {
-  width: 30%;
+  width: 230px;
   position: relative;
-  height: 40px;
+  height: 30px;
   outline: none;
   font-size: 1rem;
   color: #707070;
